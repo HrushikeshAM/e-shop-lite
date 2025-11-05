@@ -6,8 +6,7 @@ pipeline {
     }
 
     environment {
-        // MongoDB URI — change this to your actual connection string or secret in Jenkins
-        MONGO_URI = credentials('mongo-uri') 
+        MONGO_URI = credentials('mongo-uri')
     }
 
     stages {
@@ -22,7 +21,7 @@ pipeline {
             steps {
                 dir('server') {
                     echo '📦 Installing server dependencies...'
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -31,7 +30,7 @@ pipeline {
             steps {
                 dir('client') {
                     echo '📦 Installing client dependencies...'
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -40,7 +39,7 @@ pipeline {
             steps {
                 dir('client') {
                     echo '🏗️ Building React app...'
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
@@ -50,10 +49,10 @@ pipeline {
                 echo '🧪 Running tests (if available)...'
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     dir('server') {
-                        sh 'npm test || echo "No server tests found"'
+                        bat 'npm test || echo No server tests found'
                     }
                     dir('client') {
-                        sh 'npm test -- --watchAll=false || echo "No client tests found"'
+                        bat 'npm test -- --watchAll=false || echo No client tests found'
                     }
                 }
             }
@@ -62,9 +61,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Deploying full stack app...'
-                // Example: Docker or PM2 deployment
-                // dir('server') { sh 'pm2 start server.js' }
-                // Or deploy to Render / AWS / etc.
+                // Example:
+                // dir('server') { bat 'pm2 start server.js' }
+                // dir('client') { bat 'npx serve -s build' }
             }
         }
     }
