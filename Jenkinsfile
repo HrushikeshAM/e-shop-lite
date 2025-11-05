@@ -61,9 +61,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Deploying full stack app...'
-                // Example:
-                // dir('server') { bat 'pm2 start server.js' }
-                // dir('client') { bat 'npx serve -s build' }
+                dir('server') { bat 'npm start' }
+                dir('client') { bat 'npm start' }
             }
         }
     }
