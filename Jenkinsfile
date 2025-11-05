@@ -61,8 +61,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Deploying full stack app...'
-                dir('server') { bat 'npm start' }
-                dir('client') { bat 'npm start' }
+                dir('server') {
+                    bat 'start cmd /c "npm start"'
+                }
+                dir('client') {
+                    bat 'start cmd /c "npm start"'
+                }
             }
         }
     }
