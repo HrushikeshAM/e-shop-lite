@@ -1,0 +1,16 @@
+name: Python Setup
+
+on:
+  pull_request:
+
+jobs:
+  install-python:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Update Ubuntu Packages
+      run: |
+        sudo apt update
+
+    - name: Install Python
+      run: sudo apt install -y python3
